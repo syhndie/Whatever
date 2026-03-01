@@ -10,4 +10,21 @@
     <MudNavLink Href="/weather" Icon="@Icons.Material.Filled.WbSunny">
         Weather
     </MudNavLink>
+
+    <MudDivider Class="my-2" />
+    <AuthorizeView>
+        <NotAuthorized>
+            <MudNavLink Href="/login" Icon="@Icons.Material.Filled.Login">
+                Login
+            </MudNavLink>
+            <MudNavLink Href="/register" Icon="@Icons.Material.Filled.PersonAdd">
+                Register
+            </MudNavLink>
+        </NotAuthorized>
+        <Authorized Context="authState">
+            <MudText Typo="Typo.caption" Class="mt-2 px-4 mud-secondary-text">
+                Signed in as @authState.User.Identity?.Name
+            </MudText>
+        </Authorized>
+    </AuthorizeView>
 </MudNavMenu>

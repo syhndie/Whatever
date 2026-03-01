@@ -13,9 +13,31 @@
                    Color="Color.Secondary"
                    Href="https://learn.microsoft.com/aspnet/core/"
                    Target="_blank"
-                   StartIcon="@Icons.Material.Filled.MenuBook">
+                   StartIcon="@Icons.Material.Filled.MenuBook"
+                   Class="me-2">
             Learn Blazor
         </MudButton>
+        <AuthorizeView>
+            <NotAuthorized>
+                <MudButton Variant="Variant.Outlined" Color="Color.Primary" Href="/login" Class="me-2">
+                    Login
+                </MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/register">
+                    Register
+                </MudButton>
+            </NotAuthorized>
+            <Authorized Context="authState">
+                <MudChip T="string" Color="Color.Tertiary" Variant="Variant.Outlined" Class="me-2">
+                    @authState.User.Identity?.Name
+                </MudChip>
+                <form method="post" action="/account/logout">
+                    <input type="hidden" name="returnUrl" value="/" />
+                    <MudButton Variant="Variant.Outlined" Color="Color.Secondary" ButtonType="ButtonType.Submit">
+                        Logout
+                    </MudButton>
+                </form>
+            </Authorized>
+        </AuthorizeView>
     </MudAppBar>
 
     <MudDrawer Open="true" Elevation="1" ClipMode="DrawerClipMode.Always" Color="Color.Primary" Class="sidebar-drawer">
@@ -24,6 +46,13 @@
 
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.False" Class="content-shell py-6 px-6">
+            <AuthorizeView>
+                <Authorized Context="authState">
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true" Class="mb-4">
+                        Logged in as @authState.User.Identity?.Name
+                    </MudAlert>
+                </Authorized>
+            </AuthorizeView>
             @Body
         </MudContainer>
     </MudMainContent>

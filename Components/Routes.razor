@@ -1,6 +1,33 @@
-﻿<Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(Pages.NotFound)">
+<Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(Pages.NotFound)">
     <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
+        <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
+            <NotAuthorized>
+                <MudPaper Elevation="1" Class="pa-6">
+                    <MudText Typo="Typo.h5" Color="Color.Secondary" GutterBottom="true">Sign in required</MudText>
+                    <MudText Typo="Typo.body1" Class="mb-4">You need to sign in to view this page.</MudText>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="@BuildLoginUrl()">
+                        Go to login
+                    </MudButton>
+                </MudPaper>
+            </NotAuthorized>
+        </AuthorizeRouteView>
         <FocusOnNavigate RouteData="routeData" Selector="h1" />
     </Found>
 </Router>
+
+@code {
+    [Inject]
+    private NavigationManager Navigation { get; set; } = default!;
+
+    private string BuildLoginUrl()
+    {
+        var relative = Navigation.ToBaseRelativePath(Navigation.Uri);
+        var returnUrl = "/" + relative;
+        if (returnUrl == "/")
+        {
+            return "/login";
+        }
+
+        return $"/login?returnUrl={Uri.EscapeDataString(returnUrl)}";
+    }
+}

@@ -2,17 +2,17 @@
 
 <PageTitle>Home</PageTitle>
 
-<MudGrid Spacing="4" AlignItems="AlignItems.Stretch">
+<MudGrid Spacing="4">
     <MudItem xs="12" md="8">
         <MudPaper Elevation="2" Class="pa-6">
             <MudText Typo="Typo.h3" GutterBottom="true" Color="Color.Primary">Welcome to Whatever</MudText>
             <MudText Typo="Typo.body1" Class="mb-4">
                 A cozy Blazor + MudBlazor starter with an earthy palette inspired by clay, moss, and warm sunlight.
             </MudText>
-            <MudChipSet Class="mb-4" AllClosable="false">
-                <MudChip Color="Color.Primary" Variant="Variant.Filled">MudBlazor</MudChip>
-                <MudChip Color="Color.Secondary" Variant="Variant.Filled">Blazor Server</MudChip>
-                <MudChip Color="Color.Tertiary" Variant="Variant.Filled">Earthy Theme</MudChip>
+            <MudChipSet T="string" Class="mb-4" AllClosable="false">
+                <MudChip T="string" Value='@("MudBlazor")' Color="Color.Primary" Variant="Variant.Filled">MudBlazor</MudChip>
+                <MudChip T="string" Value='@("Blazor Server")' Color="Color.Secondary" Variant="Variant.Filled">Blazor Server</MudChip>
+                <MudChip T="string" Value='@("Earthy Theme")' Color="Color.Tertiary" Variant="Variant.Filled">Earthy Theme</MudChip>
             </MudChipSet>
             <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/weather" StartIcon="@Icons.Material.Filled.Explore">Explore Weather</MudButton>
         </MudPaper>
