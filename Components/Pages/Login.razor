@@ -1,0 +1,73 @@
+@page "/login"
+
+<PageTitle>Login</PageTitle>
+
+<MudPaper Elevation="2" Class="pa-6" Style="max-width: 520px;">
+    <MudText Typo="Typo.h4" Color="Color.Primary" GutterBottom="true">Login</MudText>
+    <MudText Typo="Typo.body2" Class="mb-4">Sign in with your local account.</MudText>
+
+    @if (!string.IsNullOrWhiteSpace(Error))
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Dense="true" Class="mb-4">
+            @Error
+        </MudAlert>
+    }
+
+    <form method="post" action="/account/login">
+        <input type="hidden" name="returnUrl" value="@NormalizedReturnUrl" />
+
+        <div class="mb-3">
+            <label for="email" class="mud-typography mud-typography-body2 mb-1 d-block">Email</label>
+            <input id="email" type="email" name="email" class="mud-input-slot mud-input-root mud-input-root-outlined mud-input mud-input-adorned-end w-100 p-2" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="mud-typography mud-typography-body2 mb-1 d-block">Password</label>
+            <input id="password" type="password" name="password" class="mud-input-slot mud-input-root mud-input-root-outlined mud-input mud-input-adorned-end w-100 p-2" required />
+        </div>
+
+        <div class="mb-4">
+            <input id="rememberMe" type="checkbox" name="rememberMe" value="true" />
+            <label for="rememberMe" class="ms-2">Remember me</label>
+        </div>
+
+        <MudStack Row="true" Spacing="2">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">
+                Login
+            </MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Secondary" Href="@BuildRegisterUrl()">
+                Create account
+            </MudButton>
+        </MudStack>
+    </form>
+</MudPaper>
+
+@code {
+    [SupplyParameterFromQuery(Name = "returnUrl")]
+    public string? ReturnUrl { get; set; }
+
+    [SupplyParameterFromQuery(Name = "error")]
+    public string? Error { get; set; }
+
+    private string NormalizedReturnUrl => NormalizeReturnUrl(ReturnUrl);
+
+    private string BuildRegisterUrl()
+    {
+        if (NormalizedReturnUrl == "/")
+        {
+            return "/register";
+        }
+
+        return $"/register?returnUrl={Uri.EscapeDataString(NormalizedReturnUrl)}";
+    }
+
+    private static string NormalizeReturnUrl(string? returnUrl)
+    {
+        if (string.IsNullOrWhiteSpace(returnUrl) || !returnUrl.StartsWith("/", StringComparison.Ordinal))
+        {
+            return "/";
+        }
+
+        return returnUrl.StartsWith("//", StringComparison.Ordinal) ? "/" : returnUrl;
+    }
+}

@@ -1,30 +1,30 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Whatever</a>
-    </div>
-</div>
+<MudNavMenu Class="pa-4">
+    <MudText Typo="Typo.h6" Class="mud-typography mud-typography-h6 mud-primary-text mb-4">Earthy Demo</MudText>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">
+        Home
+    </MudNavLink>
+    <MudNavLink Href="/counter" Icon="@Icons.Material.Filled.AddCircleOutline">
+        Counter
+    </MudNavLink>
+    <MudNavLink Href="/weather" Icon="@Icons.Material.Filled.WbSunny">
+        Weather
+    </MudNavLink>
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
+    <MudDivider Class="my-2" />
+    <AuthorizeView>
+        <NotAuthorized>
+            <MudNavLink Href="/login" Icon="@Icons.Material.Filled.Login">
+                Login
+            </MudNavLink>
+            <MudNavLink Href="/register" Icon="@Icons.Material.Filled.PersonAdd">
+                Register
+            </MudNavLink>
+        </NotAuthorized>
+        <Authorized Context="authState">
+            <MudText Typo="Typo.caption" Class="mt-2 px-4 mud-secondary-text">
+                Signed in as @authState.User.Identity?.Name
+            </MudText>
+        </Authorized>
+    </AuthorizeView>
+</MudNavMenu>
