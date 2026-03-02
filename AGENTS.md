@@ -9,6 +9,18 @@
 - Prefer minimal diffs over broad refactors.
 - Reuse existing patterns/services/components before adding new abstractions.
 
+## GitHub CLI (gh)
+- Prefer `gh` for PR and issue workflows when available.
+- If `gh` is not on PATH in this shell, use the full executable path:
+  - `C:\Program Files\GitHub CLI\gh.exe`
+- Verify availability and auth only if needed:
+  - `gh --version`
+  - `gh auth status`
+- If `gh` is installed but not recognized, restart the terminal or call it via the full path above.
+- Typical PR flow from the current branch:
+  - `gh pr list --base master --head <branch> --state open`
+  - `gh pr create --base master --head <branch> --fill`
+
 ## Blazor Standards
 - Prefer strongly typed models/view-models over dynamic structures.
 - Keep component logic in `@code` blocks or partial code-behind files when complexity grows.
